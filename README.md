@@ -10,9 +10,12 @@ To write a program to implement the the Logistic Regression Model to Predict the
 ## Algorithm
 1. Import the required packages and print the present data.
 2. Print the placement data and salary data.
-3. Find the null and duplicate values.
+3. Find the null and duplicate values. 
 4. Using logistic regression find the predicted values of accuracy , confusion matrices.
-5. Display the results.
+5. Display the results.2. Load the California Housing dataset and select the first 3 features as input (X) and target variables (Y) (including the target price and another feature).
+6. Split the data into training and testing sets, then scale (standardize) both the input features and target variables.
+7. Train a multi-output regression model using Stochastic Gradient Descent (SGD) on the training data.
+8. Make predictions on the test data, inverse transform the predictions, calculate the Mean Squared Error, and print the results
 
 ## Program:
 ```
