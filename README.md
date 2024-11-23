@@ -8,106 +8,94 @@ To write a program to implement the the Logistic Regression Model to Predict the
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-```
-STEP 1 : Start
+1. Import libraries and dataset: Load the required libraries and read the dataset using pandas.
+2. Copy and clean data: Duplicate the data and remove unnecessary columns (sl_no, salary ).
+3. Check for null and duplicate values: Verify missing and duplicate entries in the dataset.
+4. Encode categorical variables: Use LabelEncoder to convert categorical columns into numeric values.
+5. Define features and target: Separate the features (x) and target (y) for modeling.
+6. Split data: Divide the data into training and testing sets using train_test_split.
+7. Train Logistic Regression model: Initialize and fit the Logistic Regression model (liblinear solver) on training data.
+8. Predict on test data: Use the model to predict outcomes on the test set.
+9. Calculate accuracy: Compute the model's accuracy using accuracy_score.
+10. Generate confusion matrix: Evaluate the model's performance using a confusion matrix.
+11. Make a prediction: Predict a single instance's status using Ir.predict
 
-STEP 2 : Import and Load Data: Load the student placement dataset using pandas.
 
-STEP 3 : Preprocess Data: Copy the dataset, then drop irrelevant columns like "sl_no" and "salary" to prepare for training.
-
-STEP 4 : Check Data Integrity: Check for missing values and duplicated rows in the cleaned dataset.
-
-STEP 5 : Define Features and Labels: Separate the independent variables (features) and the dependent variable (target) 'status'.
-
-STEP 6 : Split the Data: Split the dataset into training and testing sets using an 80/20 ratio.
-
-STEP 7 : Train the Model: Initialize and train a Logistic Regression model on the training data.
-
-STEP 8 : Evaluate the Model: Predict using the test data, calculate accuracy, generate the classification report, and test with new input.
-
-STEP 9 : End
-```
 ## Program:
 ```
-/*
 Program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
 Developed by: VARSHA S
 RegisterNumber:  212222220055
-*/
-
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-
-dataset = pd.read_csv('Placement_Data_Full_Class.csv')
-dataset.head()
-dataset.info()
-
-dataset = dataset.drop('sl_no', axis=1);
-dataset.info()
-
-dataset["gender"] = dataset["gender"].astype('category')
-dataset["ssc_b"] = dataset["ssc_b"].astype('category')
-dataset["hsc_b"] = dataset["hsc_b"].astype('category')
-dataset["degree_t"] = dataset["degree_t"].astype('category')
-dataset["workex"] = dataset["workex"].astype('category')
-dataset["specialisation"] = dataset["specialisation"].astype('category')
-dataset["status"] = dataset["status"].astype('category')
-dataset["hsc_s"] = dataset["hsc_s"].astype('category')
-dataset.dtypes
+```
 
 
-dataset["gender"]=dataset["gender"].cat.codes
-dataset["ssc_b"]=dataset["ssc_b"].cat.codes
-dataset["hsc_b"]=dataset["hsc_b"].cat.codes
-dataset["degree_t"]=dataset["degree_t"].cat.codes
-dataset["workex"]=dataset["workex"].cat.codes
-dataset["specialisation"]=dataset["specialisation"].cat.codes
-dataset["status"]=dataset["status"].cat.codes
-dataset["hsc_s"]=dataset["hsc_s"].cat.codes
-dataset
+```
+import pandas as pd 
+data=pd.read_csv("C:/Users/admin/Desktop/INTR MACH/Placement_Data.csv")
+data.head()
 
-x = dataset.iloc[:,:-1]
+data1=data.copy() 
+data1=data1.drop(["sl_no" , "salary"] , axis=1)
+data1.head()
+
+data1.isnull().sum() 
+
+data1.duplicated().sum()
+
+
+from sklearn.preprocessing import LabelEncoder
+le= LabelEncoder()
+data1["gender"] = le.fit_transform(data1["gender"])
+data1["ssc_b"] = le.fit_transform(data1["ssc_b"])
+data1["hsc_b"] = le.fit_transform(data1["hsc_b"])
+data1["hsc_s"] = le.fit_transform(data1["hsc_s"])
+data1["degree_t"] = le.fit_transform(data1["degree_t"])
+data1["workex"] = le.fit_transform(data1["workex"])
+data1["specialisation"] = le.fit_transform(data1["specialisation"])
+data1["status"] = le.fit_transform(data1["status"])
+data1
+
+x=data1.iloc[: , :-1]
 x
 
-y=dataset.iloc[:,-1]
+y=data1["status"]
 y
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=0)
-clf = LogisticRegression()
-clf.fit(x_train, y_train)
-y_pred=clf.predict(x_test)
+from sklearn.model_selection import train_test_split
+x_train, x_test,y_train,y_test=train_test_split(x,y, test_size=0.2, random_state=0)
+
+from sklearn. linear_model import LogisticRegression 
+lr= LogisticRegression (solver = "liblinear") #library for Large Linear classification 1r.fit(x_train,y_train)
+lr.fit(x_train , y_train)
+y_pred =lr.predict(x_test)
 y_pred
 
-from sklearn.metrics import accuracy_score, confusion_matrix
-cf = confusion_matrix(y_test, y_pred)
-cf
-
-accuracy=accuracy_score(y_test,y_pred)
+from sklearn.metrics import accuracy_score
+accuracy=accuracy_score(y_test , y_pred)
 accuracy
+
+from sklearn.metrics import confusion_matrix
+confusion= (y_test , y_pred)
+confusion
+
+
+lr.predict([[1,80,1,90,1,1,90,1,0,85,1,85]])
+  
 ```
 
 ## Output:
-## Placement Data :
-![image](https://github.com/user-attachments/assets/d7a9bca2-ba40-4fc2-9b15-52e88e7aa6b0)
-## Salary Data :
-![image](https://github.com/user-attachments/assets/f11b4bad-9971-4743-8a7d-805395fd1651)
-## Checking the null() function :
-![image](https://github.com/user-attachments/assets/83abc147-e2f1-4af2-8188-ad69f412fa54)
-## Data Duplicate :
-![image](https://github.com/user-attachments/assets/63dda5bb-c0d2-4042-bb0c-fd805e98e3a2)
-## Clean Data :
-![image](https://github.com/user-attachments/assets/c05455b7-4279-4ac3-b095-6ee20f330d9a)
-## Y-Prediction Array :
-![image](https://github.com/user-attachments/assets/f7c25ad4-5e81-4d98-bafc-adb95e90bc7a)
-## Missing Values Check :
-![image](https://github.com/user-attachments/assets/fb9c5782-0b08-4953-9149-5132b25540a5)
-## Accuracy value :
-![image](https://github.com/user-attachments/assets/4f0e9014-3864-4456-aa48-ab2a1324eddd)
-## Confusion array :
-![image](https://github.com/user-attachments/assets/d7e0f1c4-a447-413e-86b9-8c3722c22df5)
-## Classification Report :
-![image](https://github.com/user-attachments/assets/f9dfce0b-608d-4aed-8de9-9fbbe28e96ba)
+![image](https://github.com/user-attachments/assets/f45b5451-3b45-4689-a513-acc8747d80f4)
+![image](https://github.com/user-attachments/assets/04054cea-8da1-460b-8a13-58e7d8c4775f)
+![image](https://github.com/user-attachments/assets/c4b9ac52-6c27-49ca-afba-22169af2b0e0)
+![image](https://github.com/user-attachments/assets/c7fd7337-f79a-4bd4-bae7-f3768e5336e7)
+![image](https://github.com/user-attachments/assets/8d237597-44c7-4735-b365-0e7eddeb8a8e)
+![image](https://github.com/user-attachments/assets/5a9f18a9-78ae-4b60-bc8d-fb7bab1050dc)
+![image](https://github.com/user-attachments/assets/56f68b7f-92be-42e4-8813-ca2f3bc6cdb4)
+![image](https://github.com/user-attachments/assets/ec6cac2a-6ffe-464b-a18d-dadc44344fcc)
+![image](https://github.com/user-attachments/assets/79f5caff-cec2-4a75-b8fe-e7c111e4bd63)
+![image](https://github.com/user-attachments/assets/909bfb14-6ee8-4cf3-b738-2568e4e21076)
+![image](https://github.com/user-attachments/assets/16e803f2-2fc8-46fb-989f-1832d3526c62)
+
 
 ## Result:
 Thus the program to implement the the Logistic Regression Model to Predict the Placement Status of Student is written and verified using python programming.
